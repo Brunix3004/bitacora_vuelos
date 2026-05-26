@@ -1,0 +1,506 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--sky:#0a1628;--sky2:#0d1f3c;--accent:#00b4d8;--accent2:#48cae4;--warn:#f77f00;--ok:#06d6a0;--text:#e8f4f8;--muted:#7a9ab0;--border:#1e3a52;--card:#0d1f3c;--card2:#0f2440;--input-bg:#081325;--danger:#e63946;
+}
+body{font-family:'Barlow',sans-serif;background:var(--sky);color:var(--text);min-height:100vh;font-size:14px}
+.mono{font-family:'Share Tech Mono',monospace}
+h1,h2,h3,.condensed{font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px}
+
+.app{max-width:960px;margin:0 auto;padding:1rem}
+.header{display:flex;align-items:center;justify-content:space-between;padding:1rem 0 1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;flex-wrap:wrap;gap:10px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:40px;height:40px;border:1.5px solid var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:20px}
+.logo h1{font-size:22px;font-weight:600;color:var(--text);line-height:1}
+.logo p{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.header-right{display:flex;align-items:center;gap:10px}
+.mode-badge{padding:4px 10px;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px}
+.mode-badge.pilot{background:rgba(0,180,216,.15);border:1px solid var(--accent);color:var(--accent)}
+.mode-badge.visitor{background:rgba(122,154,176,.1);border:1px solid var(--border);color:var(--muted)}
+.btn{padding:8px 18px;border-radius:3px;border:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:all .2s}
+.btn-accent{background:var(--accent);color:#000}
+.btn-accent:hover{background:var(--accent2)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn-ghost:hover{border-color:var(--muted);color:var(--text)}
+.btn-danger-outline{background:transparent;border:1px solid var(--danger);color:var(--danger)}
+.btn-danger-outline:hover{background:var(--danger);color:#fff}
+.btn-sm{padding:5px 12px;font-size:12px}
+
+.nav{display:flex;gap:4px;margin-bottom:1.5rem;flex-wrap:wrap}
+.nav-btn{padding:8px 20px;border-radius:3px 3px 0 0;border:1px solid var(--border);border-bottom:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;transition:all .2s}
+.nav-btn.active{background:var(--card);color:var(--accent);border-color:var(--accent)}
+
+.panel{background:var(--card);border:1px solid var(--border);border-radius:0 4px 4px 4px;padding:1.5rem}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group label{font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:500}
+.form-group label .req{color:var(--accent);margin-left:2px}
+.form-group input{background:var(--input-bg);border:1px solid var(--border);border-radius:3px;color:var(--text);padding:8px 10px;font-family:'Share Tech Mono',monospace;font-size:13px;width:100%;transition:border-color .2s}
+.form-group input:focus{outline:none;border-color:var(--accent)}
+.form-group .hint{font-size:10px;color:var(--muted);margin-top:2px}
+
+.section-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;font-weight:600;margin:1rem 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+
+.radio-group{display:flex;flex-wrap:wrap;gap:8px}
+.radio-item{display:flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--border);border-radius:3px;cursor:pointer;transition:all .2s;user-select:none}
+.radio-item:hover{border-color:var(--accent)}
+.radio-item.selected{background:rgba(0,180,216,.12);border-color:var(--accent)}
+.radio-item input{display:none}
+.radio-item span{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.5px;text-transform:uppercase;font-weight:500}
+
+.form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)}
+
+.btn-icon{background:transparent;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:3px;font-size:13px;transition:all .2s}
+.btn-icon:hover{border-color:var(--accent);color:var(--accent)}
+.btn-icon.del:hover{border-color:var(--danger);color:var(--danger)}
+
+.alert{padding:10px 14px;border-radius:3px;font-size:13px;margin-bottom:12px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px}
+.alert-err{background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.4);color:#f4a7ac}
+.alert-ok{background:rgba(6,214,160,.1);border:1px solid rgba(6,214,160,.3);color:var(--ok)}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
+tbody tr{border-bottom:1px solid rgba(30,58,82,.5);transition:background .15s}
+tbody tr:hover{background:var(--card2)}
+tbody td{padding:8px 10px;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text);white-space:nowrap}
+.badge{display:inline-block;padding:2px 7px;border-radius:2px;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:600}
+.badge-blue{background:rgba(0,180,216,.15);color:var(--accent);border:1px solid rgba(0,180,216,.3)}
+.badge-warn{background:rgba(247,127,0,.1);color:var(--warn);border:1px solid rgba(247,127,0,.25)}
+
+.empty-state{text-align:center;padding:3rem;color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:16px;letter-spacing:1px}
+.empty-state i{font-size:32px;display:block;margin-bottom:8px;opacity:.3}
+
+.stats-header{display:flex;gap:12px;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap}
+.stats-header select{background:var(--input-bg);border:1px solid var(--border);border-radius:3px;color:var(--text);padding:6px 12px;font-family:'Share Tech Mono',monospace;font-size:13px}
+.stats-header select:focus{outline:none;border-color:var(--accent)}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2rem}
+.stat-card{background:var(--sky);border:1px solid var(--border);border-radius:4px;padding:1.25rem 1rem;text-align:center}
+.stat-card .label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.stat-card .value{font-family:'Share Tech Mono',monospace;font-size:28px;color:var(--accent);font-weight:400;line-height:1}
+.stat-card .sub{font-size:11px;color:var(--muted);margin-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px}
+.stat-card.accent-ok .value{color:var(--ok)}
+.stat-card.accent-warn .value{color:var(--warn)}
+
+.breakdown-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:1rem}
+.breakdown-item{background:var(--sky);border:1px solid var(--border);border-radius:4px;padding:.75rem;text-align:center}
+.breakdown-item .blabel{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
+.breakdown-item .bval{font-family:'Share Tech Mono',monospace;font-size:18px;color:var(--text)}
+
+.overlay-wrap{min-height:420px;display:flex;align-items:center;justify-content:center;background:rgba(5,12,25,.85);border-radius:4px}
+.auth-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:2rem;width:340px;max-width:100%}
+.auth-card h2{font-size:18px;font-weight:600;color:var(--text);margin-bottom:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase}
+.auth-card p{font-size:12px;color:var(--muted);margin-bottom:1.5rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px}
+.auth-field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.auth-field label{font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif}
+.auth-field input{background:var(--input-bg);border:1px solid var(--border);border-radius:3px;color:var(--text);padding:9px 10px;font-family:'Share Tech Mono',monospace;font-size:13px;width:100%}
+.auth-field input:focus{outline:none;border-color:var(--accent)}
+.auth-actions{display:flex;gap:8px;margin-top:1.5rem}
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:36px}
+.pw-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:0;line-height:1}
+.auth-switch{text-align:center;margin-top:1rem;font-size:12px;color:var(--muted);font-family:'Barlow Condensed',sans-serif}
+.auth-switch button{background:none;border:none;color:var(--accent);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:12px;text-decoration:underline;padding:0}
+.pilot-info{display:flex;align-items:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--muted)}
+.pilot-info strong{color:var(--accent);font-weight:600}
+</style>
+
+<div class="app">
+
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon"><i class="ti ti-plane" aria-hidden="true"></i></div>
+      <div>
+        <h1>Bitácora de Vuelo</h1>
+        <p>Control de horas — registro oficial</p>
+      </div>
+    </div>
+    <div class="header-right" id="header-right">
+      <span id="mode-badge" class="mode-badge visitor">MODO VISITANTE</span>
+      <div id="visitor-btns">
+        <button class="btn btn-accent btn-sm" onclick="showAuthOverlay()"><i class="ti ti-lock" aria-hidden="true" style="font-size:13px;margin-right:5px"></i>Modo piloto</button>
+      </div>
+      <div id="pilot-btns" style="display:none">
+        <span class="pilot-info">Bienvenido, <strong id="pilot-name-display"></strong></span>
+        <button class="btn btn-ghost btn-sm" style="margin-left:8px" onclick="logoutPilot()"><i class="ti ti-logout" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Salir</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="auth-overlay" style="display:none;margin-bottom:1.5rem">
+    <div class="overlay-wrap">
+      <div class="auth-card">
+        <div id="auth-alert"></div>
+        <div id="auth-login-view">
+          <h2><i class="ti ti-plane" aria-hidden="true" style="font-size:18px;color:var(--accent);margin-right:6px"></i>Acceso piloto</h2>
+          <p>Ingresa tus credenciales para acceder al modo piloto</p>
+          <div class="auth-field">
+            <label>Nombre de usuario</label>
+            <input type="text" id="login-user" placeholder="tu usuario" autocomplete="username">
+          </div>
+          <div class="auth-field">
+            <label>Contraseña</label>
+            <div class="pw-wrap">
+              <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+              <button class="pw-toggle" onclick="togglePw('login-pass',this)" aria-label="Mostrar contraseña"><i class="ti ti-eye" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <div class="auth-actions">
+            <button class="btn btn-ghost" style="flex:1" onclick="hideAuthOverlay()">Cancelar</button>
+            <button class="btn btn-accent" style="flex:1" onclick="doLogin()">Entrar</button>
+          </div>
+          <div class="auth-switch" id="login-switch">
+            ¿Primera vez? <button onclick="showRegisterView()">Crear cuenta de piloto</button>
+          </div>
+        </div>
+        <div id="auth-register-view" style="display:none">
+          <h2><i class="ti ti-user-plus" aria-hidden="true" style="font-size:18px;color:var(--accent);margin-right:6px"></i>Crear cuenta</h2>
+          <p>Registrate como piloto para gestionar tus vuelos</p>
+          <div class="auth-field">
+            <label>Tu nombre</label>
+            <input type="text" id="reg-name" placeholder="ej. Carlos Mendoza" autocomplete="name">
+          </div>
+          <div class="auth-field">
+            <label>Nombre de usuario</label>
+            <input type="text" id="reg-user" placeholder="ej. carlos_mendoza" autocomplete="username">
+          </div>
+          <div class="auth-field">
+            <label>Contraseña</label>
+            <div class="pw-wrap">
+              <input type="password" id="reg-pass" placeholder="mínimo 6 caracteres" autocomplete="new-password">
+              <button class="pw-toggle" onclick="togglePw('reg-pass',this)" aria-label="Mostrar contraseña"><i class="ti ti-eye" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <div class="auth-field">
+            <label>Confirmar contraseña</label>
+            <div class="pw-wrap">
+              <input type="password" id="reg-pass2" placeholder="repite tu contraseña" autocomplete="new-password" onkeydown="if(event.key==='Enter')doRegister()">
+              <button class="pw-toggle" onclick="togglePw('reg-pass2',this)" aria-label="Mostrar contraseña"><i class="ti ti-eye" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <div class="auth-actions">
+            <button class="btn btn-ghost" style="flex:1" onclick="showLoginView()">Volver</button>
+            <button class="btn btn-accent" style="flex:1" onclick="doRegister()">Registrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="main-content">
+    <div class="nav" id="main-nav">
+      <button class="nav-btn active" id="tab-log" onclick="setTab('log')">Registros</button>
+      <button class="nav-btn" id="tab-stats" onclick="setTab('stats')">Estadísticas</button>
+      <button class="nav-btn" id="tab-new" onclick="setTab('new')" style="display:none">Nuevo registro</button>
+    </div>
+
+    <div class="panel" id="panel-log">
+      <div id="alert-area"></div>
+      <div class="table-wrap">
+        <table id="log-table">
+          <thead>
+            <tr>
+              <th>Fecha</th><th>Matrícula</th><th>Tipo avión</th><th>Mot.</th>
+              <th>De</th><th>Hacia</th><th>Horas</th><th>Categoría</th><th>Hrs cat.</th>
+              <th id="actions-col" style="display:none">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="log-body"></tbody>
+        </table>
+        <div id="log-empty" class="empty-state" style="display:none">
+          <i class="ti ti-cloud" aria-hidden="true"></i>
+          Sin registros aún.
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-new" style="display:none">
+      <div id="form-alert"></div>
+      <div class="section-label">Datos del vuelo</div>
+      <div class="form-grid">
+        <div class="form-group"><label>Fecha <span class="req">*</span></label><input type="date" id="f-fecha"></div>
+        <div class="form-group"><label>Matrícula <span class="req">*</span></label><input type="text" id="f-matricula" placeholder="ej. OB-1234"></div>
+        <div class="form-group"><label>Tipo de avión <span class="req">*</span></label><input type="text" id="f-tipo" placeholder="ej. Cessna 172"></div>
+        <div class="form-group"><label>Nro. motores</label><input type="number" id="f-motores" placeholder="1" min="1"></div>
+        <div class="form-group"><label>De <span class="req">*</span></label><input type="text" id="f-de" placeholder="ej. SPJC"></div>
+        <div class="form-group"><label>Hacia <span class="req">*</span></label><input type="text" id="f-hacia" placeholder="ej. SPHI"></div>
+      </div>
+      <div class="section-label">Total tiempo</div>
+      <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr">
+        <div class="form-group"><label>Piloto (HHMM)</label><input type="text" id="f-piloto" placeholder="0130" maxlength="4" class="mono"><span class="hint">01h 30min → 0130</span></div>
+        <div class="form-group"><label>DM (HHMM)</label><input type="text" id="f-dm" placeholder="0000" maxlength="4" class="mono"></div>
+        <div></div>
+      </div>
+      <div id="time-alert" style="display:none" class="alert alert-err">Al menos uno de los campos de tiempo (Piloto o DM) es obligatorio.</div>
+      <div class="section-label">Categoría de horas (solo una)</div>
+      <div class="radio-group" id="radio-group">
+        <label class="radio-item" id="ri-travesia" onclick="selectRadio('travesia')"><input type="radio" name="cat"><span>Horas travesía</span></label>
+        <label class="radio-item" id="ri-ifr" onclick="selectRadio('ifr')"><input type="radio" name="cat"><span>IFR</span></label>
+        <label class="radio-item" id="ri-noche" onclick="selectRadio('noche')"><input type="radio" name="cat"><span>Noche</span></label>
+        <label class="radio-item selected" id="ri-none" onclick="selectRadio(null)"><input type="radio" name="cat"><span>Ninguna</span></label>
+      </div>
+      <div class="form-grid" style="margin-top:12px;grid-template-columns:1fr 1fr 1fr">
+        <div class="form-group" id="fg-travesia" style="display:none"><label>Horas travesía (HHMM)</label><input type="text" id="f-travesia" placeholder="0000" maxlength="4" class="mono"></div>
+        <div class="form-group" id="fg-ifr" style="display:none"><label>IFR (HHMM)</label><input type="text" id="f-ifr" placeholder="0000" maxlength="4" class="mono"></div>
+        <div class="form-group" id="fg-noche" style="display:none"><label>Noche (HHMM)</label><input type="text" id="f-noche" placeholder="0000" maxlength="4" class="mono"></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="cancelForm()">Cancelar</button>
+        <button class="btn btn-accent" id="submit-btn" onclick="submitForm()">Guardar vuelo</button>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-stats" style="display:none">
+      <div class="stats-header">
+        <label style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)">Mes:</label>
+        <select id="stats-month" onchange="renderStats()"></select>
+      </div>
+      <div id="stats-content"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const FLIGHTS_KEY='bitacora_vuelos_v1';
+const AUTH_KEY='bitacora_auth_v1';
+let flights=[], authData=null;
+let mode='visitor', currentTab='log', editingId=null, selectedCat=null;
+
+async function loadAll(){
+  try{ const r=await window.storage.get(FLIGHTS_KEY); if(r&&r.value) flights=JSON.parse(r.value); }catch(e){ flights=[]; }
+  try{ const r=await window.storage.get(AUTH_KEY); if(r&&r.value) authData=JSON.parse(r.value); }catch(e){ authData=null; }
+}
+async function saveFlights(){ try{ await window.storage.set(FLIGHTS_KEY,JSON.stringify(flights)); }catch(e){} }
+async function saveAuth(){ try{ await window.storage.set(AUTH_KEY,JSON.stringify(authData)); }catch(e){} }
+
+function hashPass(pw){ let h=0; for(let i=0;i<pw.length;i++){ h=(Math.imul(31,h)+pw.charCodeAt(i))|0; } return h.toString(36)+'_'+pw.length; }
+
+function showAuthOverlay(){ document.getElementById('auth-overlay').style.display=''; showLoginView(); document.getElementById('auth-alert').innerHTML=''; }
+function hideAuthOverlay(){ document.getElementById('auth-overlay').style.display='none'; }
+function showRegisterView(){
+  document.getElementById('auth-login-view').style.display='none';
+  document.getElementById('auth-register-view').style.display='';
+  document.getElementById('auth-alert').innerHTML='';
+  if(authData){ document.getElementById('auth-register-view').style.display='none'; document.getElementById('auth-login-view').style.display=''; showAuthAlert('Ya existe una cuenta registrada. Inicia sesión.','err'); }
+}
+function showLoginView(){
+  document.getElementById('auth-login-view').style.display='';
+  document.getElementById('auth-register-view').style.display='none';
+  document.getElementById('auth-alert').innerHTML='';
+  const sw=document.getElementById('login-switch');
+  if(sw) sw.style.display=authData?'none':'';
+}
+function showAuthAlert(msg,type){ const el=document.getElementById('auth-alert'); el.innerHTML=`<div class="alert alert-${type==='ok'?'ok':'err'}">${msg}</div>`; }
+function togglePw(id,btn){ const el=document.getElementById(id); el.type=el.type==='password'?'text':'password'; btn.innerHTML=el.type==='password'?'<i class="ti ti-eye" aria-hidden="true"></i>':'<i class="ti ti-eye-off" aria-hidden="true"></i>'; }
+
+async function doRegister(){
+  if(authData){ showAuthAlert('Ya existe una cuenta. Inicia sesión.','err'); return; }
+  const name=document.getElementById('reg-name').value.trim();
+  const user=document.getElementById('reg-user').value.trim();
+  const pass=document.getElementById('reg-pass').value;
+  const pass2=document.getElementById('reg-pass2').value;
+  if(!name||!user||!pass){ showAuthAlert('Completa todos los campos.','err'); return; }
+  if(pass.length<6){ showAuthAlert('La contraseña debe tener al menos 6 caracteres.','err'); return; }
+  if(pass!==pass2){ showAuthAlert('Las contraseñas no coinciden.','err'); return; }
+  authData={name,user,hash:hashPass(pass)};
+  await saveAuth();
+  showAuthAlert('Cuenta creada. Ingresando...','ok');
+  setTimeout(()=>{ activatePilot(); },800);
+}
+
+function doLogin(){
+  if(!authData){ showAuthAlert('No hay cuenta registrada. Crea una primero.','err'); showRegisterView(); return; }
+  const user=document.getElementById('login-user').value.trim();
+  const pass=document.getElementById('login-pass').value;
+  if(!user||!pass){ showAuthAlert('Ingresa usuario y contraseña.','err'); return; }
+  if(user!==authData.user||hashPass(pass)!==authData.hash){ showAuthAlert('Usuario o contraseña incorrectos.','err'); return; }
+  activatePilot();
+}
+
+function activatePilot(){
+  mode='pilot';
+  hideAuthOverlay();
+  document.getElementById('mode-badge').textContent='MODO PILOTO';
+  document.getElementById('mode-badge').className='mode-badge pilot';
+  document.getElementById('visitor-btns').style.display='none';
+  document.getElementById('pilot-btns').style.display='flex';
+  document.getElementById('pilot-name-display').textContent=authData.name;
+  document.getElementById('tab-new').style.display='';
+  document.getElementById('actions-col').style.display='';
+  renderLog();
+}
+
+function logoutPilot(){
+  mode='visitor';
+  document.getElementById('mode-badge').textContent='MODO VISITANTE';
+  document.getElementById('mode-badge').className='mode-badge visitor';
+  document.getElementById('visitor-btns').style.display='';
+  document.getElementById('pilot-btns').style.display='none';
+  document.getElementById('tab-new').style.display='none';
+  document.getElementById('actions-col').style.display='none';
+  if(currentTab==='new') setTab('log');
+  renderLog();
+}
+
+function setTab(t){
+  currentTab=t;
+  ['log','new','stats'].forEach(x=>{
+    document.getElementById('panel-'+x).style.display=x===t?'':'none';
+    const btn=document.getElementById('tab-'+x); if(btn) btn.classList.toggle('active',x===t);
+  });
+  if(t==='new') resetForm();
+  if(t==='stats'){ buildStatsMonths(); renderStats(); }
+}
+
+function parseHHMM(v){ if(!v||v.trim()==='') return null; v=v.replace(/\D/g,'').padStart(4,'0'); const h=parseInt(v.slice(0,2),10),m=parseInt(v.slice(2,4),10); if(isNaN(h)||isNaN(m)||m>=60) return null; return h*60+m; }
+function toHHMM(mins){ if(mins===null||mins===undefined) return '—'; const h=Math.floor(mins/60),m=mins%60; return String(h).padStart(2,'0')+String(m).padStart(2,'0'); }
+function getTotalMin(f){ return (f.piloto||0)+(f.dm||0); }
+
+function renderLog(){
+  const body=document.getElementById('log-body');
+  const empty=document.getElementById('log-empty');
+  body.innerHTML='';
+  const isPilot=mode==='pilot';
+  document.getElementById('actions-col').style.display=isPilot?'':'none';
+  if(!flights.length){ empty.style.display=''; return; }
+  empty.style.display='none';
+  const sorted=[...flights].sort((a,b)=>a.fecha>b.fecha?-1:1);
+  sorted.forEach(f=>{
+    const total=getTotalMin(f);
+    const catLabel=f.categoria?f.categoria.charAt(0).toUpperCase()+f.categoria.slice(1):'—';
+    const catMin=f.catMin!==null&&f.catMin!==undefined?toHHMM(f.catMin):'—';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${f.fecha}</td><td>${f.matricula}</td><td>${f.tipo}</td><td>${f.motores||'—'}</td><td>${f.de}</td><td>${f.hacia}</td><td><span class="badge badge-blue">${toHHMM(total)}</span></td><td>${f.categoria?'<span class="badge badge-warn">'+catLabel+'</span>':'—'}</td><td>${catMin}</td><td style="display:${isPilot?'':'none'}">${isPilot?`<button class="btn-icon" onclick="editFlight('${f.id}')"><i class="ti ti-edit" aria-hidden="true"></i></button> <button class="btn-icon del" onclick="deleteFlight('${f.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button>`:''}</td>`;
+    body.appendChild(tr);
+  });
+}
+
+function resetForm(){
+  editingId=null;
+  ['f-fecha','f-matricula','f-tipo','f-motores','f-de','f-hacia','f-piloto','f-dm','f-travesia','f-ifr','f-noche'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  selectRadio(null);
+  document.getElementById('form-alert').innerHTML='';
+  document.getElementById('time-alert').style.display='none';
+  document.getElementById('submit-btn').textContent='Guardar vuelo';
+}
+
+function editFlight(id){
+  const f=flights.find(x=>x.id===id); if(!f) return;
+  editingId=id; setTab('new');
+  document.getElementById('f-fecha').value=f.fecha;
+  document.getElementById('f-matricula').value=f.matricula;
+  document.getElementById('f-tipo').value=f.tipo;
+  document.getElementById('f-motores').value=f.motores||'';
+  document.getElementById('f-de').value=f.de;
+  document.getElementById('f-hacia').value=f.hacia;
+  document.getElementById('f-piloto').value=f.piloto!==null&&f.piloto!==undefined?toHHMM(f.piloto):'';
+  document.getElementById('f-dm').value=f.dm!==null&&f.dm!==undefined?toHHMM(f.dm):'';
+  selectRadio(f.categoria||null);
+  if(f.categoria&&f.catMin!==null){ const el=document.getElementById('f-'+f.categoria); if(el) el.value=toHHMM(f.catMin); }
+  document.getElementById('submit-btn').textContent='Actualizar vuelo';
+}
+
+async function deleteFlight(id){
+  if(!confirm('¿Eliminar este registro?')) return;
+  flights=flights.filter(x=>x.id!==id);
+  await saveFlights();
+  showAlert('Registro eliminado.','ok');
+  renderLog();
+}
+
+function selectRadio(cat){
+  selectedCat=cat;
+  ['travesia','ifr','noche'].forEach(c=>{ document.getElementById('ri-'+c).classList.toggle('selected',c===cat); const fg=document.getElementById('fg-'+c); if(fg) fg.style.display=c===cat?'':'none'; });
+  document.getElementById('ri-none').classList.toggle('selected',cat===null);
+}
+
+function showAlert(msg,type,target){
+  const el=document.getElementById(target||'alert-area');
+  el.innerHTML=`<div class="alert alert-${type==='ok'?'ok':'err'}">${msg}</div>`;
+  if(type==='ok') setTimeout(()=>el.innerHTML='',3000);
+}
+
+async function submitForm(){
+  let errs=[];
+  const fecha=document.getElementById('f-fecha').value;
+  const matricula=document.getElementById('f-matricula').value.trim();
+  const tipo=document.getElementById('f-tipo').value.trim();
+  const de=document.getElementById('f-de').value.trim();
+  const hacia=document.getElementById('f-hacia').value.trim();
+  const motores=document.getElementById('f-motores').value;
+  if(!fecha) errs.push('La fecha es obligatoria.');
+  if(!matricula) errs.push('La matrícula es obligatoria.');
+  if(!tipo) errs.push('El tipo de avión es obligatorio.');
+  if(!de) errs.push('El campo "De" es obligatorio.');
+  if(!hacia) errs.push('El campo "Hacia" es obligatorio.');
+  const pilotoMin=parseHHMM(document.getElementById('f-piloto').value.trim());
+  const dmMin=parseHHMM(document.getElementById('f-dm').value.trim());
+  const pRaw=document.getElementById('f-piloto').value.trim(), dRaw=document.getElementById('f-dm').value.trim();
+  if((pRaw===''||pilotoMin===null)&&(dRaw===''||dmMin===null)){ document.getElementById('time-alert').style.display=''; errs.push('Tiempo requerido.'); }
+  else document.getElementById('time-alert').style.display='none';
+  let catMin=null;
+  if(selectedCat){ catMin=parseHHMM(document.getElementById('f-'+selectedCat).value.trim()); if(catMin===null) errs.push('Ingresa un tiempo válido para la categoría (HHMM).'); }
+  if(errs.length){ showAlert(errs.join(' '),'err','form-alert'); return; }
+  const entry={id:editingId||Date.now().toString(36)+Math.random().toString(36).slice(2,6),fecha,matricula,tipo,motores:motores?parseInt(motores):null,de,hacia,piloto:pilotoMin,dm:dmMin,categoria:selectedCat||null,catMin};
+  if(editingId){ const idx=flights.findIndex(x=>x.id===editingId); flights[idx]=entry; }
+  else flights.push(entry);
+  await saveFlights();
+  showAlert(editingId?'Vuelo actualizado.':'Vuelo guardado.','ok','form-alert');
+  setTimeout(()=>{ setTab('log'); renderLog(); },600);
+}
+
+function cancelForm(){ setTab('log'); renderLog(); }
+
+function buildStatsMonths(){
+  const sel=document.getElementById('stats-month');
+  const months=new Set();
+  flights.forEach(f=>{ if(f.fecha) months.add(f.fecha.slice(0,7)); });
+  const now=new Date();
+  const cur=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  months.add(cur);
+  const sorted=[...months].sort().reverse();
+  sel.innerHTML=sorted.map(m=>`<option value="${m}">${monthLabel(m)}</option>`).join('');
+}
+
+function monthLabel(ym){ const[y,m]=ym.split('-'); const n=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']; return `${n[parseInt(m,10)-1]} ${y}`; }
+
+function renderStats(){
+  const sel=document.getElementById('stats-month').value; if(!sel) return;
+  const thisMonth=flights.filter(f=>f.fecha&&f.fecha.startsWith(sel));
+  const before=flights.filter(f=>f.fecha&&f.fecha.slice(0,7)<sel);
+  const calcTotal=arr=>arr.reduce((a,f)=>a+getTotalMin(f),0);
+  const tMonth=calcTotal(thisMonth), tBefore=calcTotal(before), tTotal=tMonth+tBefore;
+  const catBreakdown=arr=>{ const r={piloto:0,dm:0,travesia:0,ifr:0,noche:0}; arr.forEach(f=>{ r.piloto+=f.piloto||0; r.dm+=f.dm||0; if(f.categoria&&f.catMin) r[f.categoria]+=f.catMin; }); return r; };
+  const bMonth=catBreakdown(thisMonth), bTotal=catBreakdown(flights.filter(f=>f.fecha&&f.fecha.slice(0,7)<=sel));
+  document.getElementById('stats-content').innerHTML=`
+    <div class="stats-grid">
+      <div class="stat-card"><div class="label">Horas este mes</div><div class="value">${toHHMM(tMonth)}</div><div class="sub">${thisMonth.length} vuelo${thisMonth.length!==1?'s':''}</div></div>
+      <div class="stat-card accent-warn"><div class="label">Horas anteriores</div><div class="value">${toHHMM(tBefore)}</div><div class="sub">hasta ${monthLabel(sel)}</div></div>
+      <div class="stat-card accent-ok"><div class="label">Total acumulado</div><div class="value">${toHHMM(tTotal)}</div><div class="sub">total general</div></div>
+    </div>
+    <div class="section-label">Desglose — este mes</div>
+    <div class="breakdown-grid">
+      <div class="breakdown-item"><div class="blabel">Piloto</div><div class="bval">${toHHMM(bMonth.piloto)}</div></div>
+      <div class="breakdown-item"><div class="blabel">DM</div><div class="bval">${toHHMM(bMonth.dm)}</div></div>
+      <div class="breakdown-item"><div class="blabel">Travesía</div><div class="bval">${toHHMM(bMonth.travesia)}</div></div>
+      <div class="breakdown-item"><div class="blabel">IFR</div><div class="bval">${toHHMM(bMonth.ifr)}</div></div>
+      <div class="breakdown-item"><div class="blabel">Noche</div><div class="bval">${toHHMM(bMonth.noche)}</div></div>
+    </div>
+    <div class="section-label" style="margin-top:1.5rem">Desglose — total acumulado</div>
+    <div class="breakdown-grid">
+      <div class="breakdown-item"><div class="blabel">Piloto</div><div class="bval">${toHHMM(bTotal.piloto)}</div></div>
+      <div class="breakdown-item"><div class="blabel">DM</div><div class="bval">${toHHMM(bTotal.dm)}</div></div>
+      <div class="breakdown-item"><div class="blabel">Travesía</div><div class="bval">${toHHMM(bTotal.travesia)}</div></div>
+      <div class="breakdown-item"><div class="blabel">IFR</div><div class="bval">${toHHMM(bTotal.ifr)}</div></div>
+      <div class="breakdown-item"><div class="blabel">Noche</div><div class="bval">${toHHMM(bTotal.noche)}</div></div>
+    </div>`;
+}
+
+(async function init(){
+  await loadAll();
+  renderLog();
+})();
+</script>
